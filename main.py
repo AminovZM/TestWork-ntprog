@@ -5,32 +5,17 @@ from fastapi.responses import HTMLResponse
 from chat.coters import quotations
 import random
 
+from chat.router import router as router_application
+
 app = FastAPI()
 
-with open("chat/chat.html", 'r') as h:
+with open("templates/chat.html", 'r', encoding='utf-8') as h:
     html = h.read()
 
-html2 = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>BTC</title>
-</head>
-<body>
-    <h1>Bitcoin</h1>
-</body>
-</html>
-
-"""
 
 @app.get("/")
 async def get():
     return HTMLResponse(html)
-
-
-@app.get("/{name_crypto}")
-async def get():
-    return HTMLResponse(html2)
 
 
 @app.websocket("/ws")
@@ -45,4 +30,4 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         pass
 
-
+app.include_router(router_application)
