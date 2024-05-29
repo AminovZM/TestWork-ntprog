@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* выбранный шрифт */
+            background-color: #f0f0f0; /* цвет фона */
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .application_list {
+            //width: 300px; /* ширина блока ticker */
+            margin: 20px auto; /* центрирование по горизонтали */
+            background-color: #fff; /* цвет фона */
+            border-radius: 8px; /* скругление углов */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* тень */
+            padding: 20px; /* отступы внутри блока */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Заявки</h1>
+    </header>
+
+    <div class="application_list">
+        <table id="applications">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>creation_time</th>
+                    <th>change_time</th>
+                    <th>status</th>
+                    <th>side</th>
+                    <th>price</th>
+                    <th>amount</th>
+                    <th>instrument</th>
+                </tr>
+            </thead>
+            <tbody id="application_body"></tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+        const tableBody = document.getElementById('application_body');
+        const pagination = document.getElementById('pagination');
+        let currentPage = 1;
+        const limit = 9; // Устанавливаем желаемый лимит элементов на странице
+
+        async function fetchData(page) {
+            const skip = (page - 1) * limit;
+            try {
+                const response = await fetch(`/applications/?skip=${skip}&limit=${limit}`);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error:', error);
+                return [];
+            }
+        }
+
+        async function populateTable(page) {
+            const data = await fetchData(page);
+
+            tableBody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.creation_time}</td>
+                    <td>${item.change_time}</td>
+                    <td>${item.status}</td>
+                    <td>${item.side}</td>
+                    <td>${item.price}</td>
+                    <td>${item.amount}</td>
+                    <td>${item.instrument}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            updatePaginationButtons(page, data.length === limit);
+        }
+
+        function updatePaginationButtons(currentPage, hasNextPage) {
+            pagination.innerHTML = '';
+
+            const prevButton = document.createElement('button');
+            prevButton.innerText = 'Prev';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    populateTable(currentPage);
+                }
+            });
+            pagination.appendChild(prevButton);
+
+            const nextButton = document.createElement('button');
+            nextButton.innerText = 'Next';
+            nextButton.disabled = !hasNextPage;
+            nextButton.addEventListener('click', () => {
+                currentPage++;
+                populateTable(currentPage);
+            });
+            pagination.appendChild(nextButton);
+        }
+
+        populateTable(currentPage);
+    </script>
+</body>
+</html>

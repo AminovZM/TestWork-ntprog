@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,3 +20,17 @@ async def add_applications(new_product: BasketApplication, session: AsyncSession
     await session.execute(stmt)
     await session.commit()
     return {"status": "success"}
+
+
+@router.get("/")
+async def get_applications(
+    skip: int = Query(0, ge=0, description="Number of items to skip"),
+    limit: int = Query(10, ge=1, le=100, description="Max number of items to return"),
+    session: AsyncSession = Depends(get_async_session)
+):
+    query = select(application).offset(skip).limit(limit)
+    result = await session.execute(query)
+
+    rows_as_dicts = [row._asdict() for row in result.all()]
+
+    return rows_as_dicts

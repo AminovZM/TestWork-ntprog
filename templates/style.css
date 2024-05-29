@@ -1,0 +1,108 @@
+/* Пример стилей для таблицы */
+
+body {
+    font-family: Arial, sans-serif; /* выбранный шрифт */
+    background-color: #f0f0f0; /* цвет фона */
+    margin: 0;
+    padding: 0;
+}
+
+.quotations_bloc {
+    //width: 300px; /* ширина блока ticker */
+    margin: 20px auto; /* центрирование по горизонтали */
+    background-color: #fff; /* цвет фона */
+    border-radius: 8px; /* скругление углов */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* тень */
+    padding: 20px; /* отступы внутри блока */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+#ticker {
+    width: 300px; /* ширина блока ticker */
+    margin: 20px auto; /* центрирование по горизонтали */
+    background-color: #fff; /* цвет фона */
+    border-radius: 8px; /* скругление углов */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* тень */
+    padding: 20px; /* отступы внутри блока */
+}
+
+#name_product {
+    width: calc(100% - 40px); /* ширина с учетом внутренних отступов */
+    font-size: 24px; /* размер шрифта */
+    color: #333; /* цвет текста */
+    margin-bottom: 10px; /* отступ снизу */
+    text-align: center; /* выравнивание текста по центру */
+    padding: 5px; /* отступы внутри блока */
+    border: 1px solid #ccc; /* граница */
+    border-radius: 4px; /* скругление углов */
+}
+
+#summa {
+    width: calc(100% - 40px); /* ширина с учетом внутренних отступов */
+    padding: 10px; /* отступы внутри поля ввода */
+    border: 1px solid #ccc; /* граница */
+    border-radius: 4px; /* скругление углов */
+    margin-bottom: 20px; /* отступ снизу */
+}
+
+.ramka {
+    width: calc(100% - 40px); /* ширина с учетом внутренних отступов */
+    display: flex; /* использование flexbox */
+    justify-content: space-between; /* равномерное распределение элементов */
+    border: 1px solid #ccc; /* граница */
+    border-radius: 4px; /* скругление углов */
+    padding: 10px; /* отступы внутри блока */
+    margin-bottom: 20px; /* отступ снизу */
+}
+
+#div_sell,
+#div_buy,
+#summa {
+    flex: 1; /* занимает равную часть пространства */
+}
+
+#div_sell {
+    margin-right: 10px; /* отступ справа */
+}
+
+#div_buy {
+    margin-left: 10px; /* отступ слева */
+}
+
+#price_sell,
+#price_buy {
+    font-size: 18px; /* размер шрифта */
+    color: #333; /* цвет текста */
+    margin-bottom: 5px; /* отступ снизу */
+}
+
+#list_apps,
+#btn_sell,
+#btn_buy {
+    background-color: #0056b3; /* цвет фона кнопок */
+    color: #fff; /* цвет текста кнопок */
+    border: none; /* убираем границу */
+    padding: 8px 16px; /* отступы внутри кнопок */
+    border-radius: 4px; /* скругление углов */
+    cursor: pointer; /* указатель при наведении */
+    outline: none; /* убираем рамку при фокусе */
+}
+
+#btn_sell:hover,
+#btn_buy:hover {
+    background-color: #45a049; /* изменение цвета фона при наведении */
+}

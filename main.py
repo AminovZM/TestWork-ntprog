@@ -4,18 +4,24 @@ from fastapi.responses import HTMLResponse
 
 from chat.coters import quotations
 import random
+from templates.read_html import html
 
 from chat.router import router as router_application
 
 app = FastAPI()
 
-with open("templates/chat.html", 'r', encoding='utf-8') as h:
-    html = h.read()
+with open("templates/list_apps.html", 'r', encoding="utf-8") as h:
+    list_html = h.read()
 
 
 @app.get("/")
 async def get():
     return HTMLResponse(html)
+
+
+@app.get("/list-applications")
+async def get_list():
+    return HTMLResponse(list_html)
 
 
 @app.websocket("/ws")
